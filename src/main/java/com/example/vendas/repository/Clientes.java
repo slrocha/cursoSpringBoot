@@ -1,4 +1,4 @@
-package com.example.vendas.repositorio;
+package com.example.vendas.repository;
 
 import com.example.vendas.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
