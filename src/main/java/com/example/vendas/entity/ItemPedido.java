@@ -1,7 +1,4 @@
-package com.example.vendas.domain.entity;
-
-import com.example.vendas.domain.entity.Pedido;
-import com.example.vendas.domain.entity.Produto;
+package com.example.vendas.entity;
 
 public class ItemPedido {
 
