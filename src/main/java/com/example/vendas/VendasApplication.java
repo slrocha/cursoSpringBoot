@@ -17,30 +17,7 @@ import java.util.List;
 
 @SpringBootApplication
 public class VendasApplication {
-
-	@Bean
-	public CommandLineRunner init(@Autowired Clientes clientes, @Autowired Pedidos pedidos){
-		return args -> {
-
-			System.out.println("Criando clientes");
-			Cliente cliente = new Cliente("Stephanie Lima Rocha");
-			clientes.save(cliente);
-
-			Pedido p = new Pedido();
-			p.setCliente(cliente);
-			p.setDataPedido(LocalDate.now());
-			p.setTotal(BigDecimal.valueOf(100));
-			pedidos.save(p);
-
-			/*Cliente c = clientes.findClienteFetchPedido(cliente.getId());
-			System.out.println(c);
-			System.out.println(cliente.getPedidos());*/
-
-			pedidos.findByCliente(cliente).forEach(System.out::println);
-		};
-	}
 	public static void main(String[] args) {
 		SpringApplication.run(VendasApplication.class, args);
 	}
-
 }
