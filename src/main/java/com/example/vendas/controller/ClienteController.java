@@ -16,16 +16,16 @@ import java.util.List;
 public class ClienteController {
 
     @Autowired
-    private Clientes clientes;
+    private Clientes clientesRepository;
 
     public ClienteController(Clientes clientes){
-        this.clientes = clientes;
+        this.clientesRepository = clientes;
     }
 
     @GetMapping("{id}")
     public Cliente getClienteById( @PathVariable Integer id ){
         //pathVariable recebe um parâmetro via url
-        return clientes
+        return clientesRepository
                 .findById(id)
                 .orElseThrow( () ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -35,27 +35,27 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente save(@RequestBody Cliente cliente){
-        return clientes.save(cliente);
+        return clientesRepository.save(cliente);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
-        clientes.findById(id)
+        clientesRepository.findById(id)
                 .map(cliente -> {
-                    clientes.delete(cliente);
+                    clientesRepository.delete(cliente);
                     return cliente;
                 })
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cliente não encontrado"));
     }
 
-    @PutMapping("{id}") //quando for atualizar um recurso no servidor
+    @PutMapping("{id}") //quando for atualizar um recurso no servidor, é necessário passar todas as info do cliente atualizada, se n ele faz um update em todos os outros campos setando pra null
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Cliente cliente){
-         clientes.findById(id)
+        clientesRepository.findById(id)
                     .map(clienteExistente -> {
                         cliente.setId(clienteExistente.getId());
-                        clientes.save(cliente);
+                        clientesRepository.save(cliente);
                     return clienteExistente;
          }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado")); //supplier
     }
@@ -71,6 +71,6 @@ public class ClienteController {
                         ExampleMatcher.StringMatcher.CONTAINING);
 
         Example example = Example.of(filtro, matcher); //pegar as propriedas populadas e criar o objeto
-        return clientes.findAll(example);
+        return clientesRepository.findAll(example);
     }
 }
