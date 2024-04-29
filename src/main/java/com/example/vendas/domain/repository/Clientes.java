@@ -1,6 +1,6 @@
-package com.example.vendas.repository;
+package com.example.vendas.domain.repository;
 
-import com.example.vendas.entity.Cliente;
+import com.example.vendas.domain.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

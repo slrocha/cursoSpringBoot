@@ -1,8 +1,7 @@
-package com.example.vendas.controller;
+package com.example.vendas.rest.controller;
 
-import com.example.vendas.entity.Produto;
-import com.example.vendas.repository.Produtos;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.vendas.domain.entity.Produto;
+import com.example.vendas.domain.repository.Produtos;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
