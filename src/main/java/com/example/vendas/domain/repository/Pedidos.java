@@ -13,6 +13,7 @@ public interface Pedidos extends JpaRepository<Pedido, Integer> {
     List<Pedido> findByCliente(Cliente cliente);
 
     //usa-se o optional pq possa ser que o objeto/registro nao exista no bd
+    // LEFT JOIN FETCH retornará todas as instâncias de A(Pedido) que têm uma relação B(ItensPedidos) não nula,
     @Query("select p from Pedido p left join fetch p.itens where p.id = :id")
     Optional<Pedido> findByIdFetchItens(@Param("id") Integer id);
 }

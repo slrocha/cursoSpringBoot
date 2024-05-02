@@ -2,6 +2,7 @@ package com.example.vendas.rest.controller;
 
 import com.example.vendas.domain.entity.Cliente;
 import com.example.vendas.domain.repository.Clientes;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -34,7 +35,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save(@RequestBody Cliente cliente){
+    public Cliente save(@RequestBody @Valid Cliente cliente){
         return clientesRepository.save(cliente);
     }
 
@@ -51,7 +52,7 @@ public class ClienteController {
 
     @PutMapping("{id}") //quando for atualizar um recurso no servidor, é necessário passar todas as info do cliente atualizada, se n ele faz um update em todos os outros campos setando pra null
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Cliente cliente){
+    public void update(@PathVariable Integer id, @RequestBody @Valid Cliente cliente){
         clientesRepository.findById(id)
                     .map(clienteExistente -> {
                         cliente.setId(clienteExistente.getId());

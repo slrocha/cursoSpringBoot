@@ -2,6 +2,7 @@ package com.example.vendas.rest.controller;
 
 import com.example.vendas.domain.entity.Produto;
 import com.example.vendas.domain.repository.Produtos;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto salvar(@RequestBody Produto produto){
+    public Produto salvar(@RequestBody @Valid Produto produto){
         return produtosRepository.save(produto);
     }
 
