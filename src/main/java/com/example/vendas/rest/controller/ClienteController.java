@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -62,7 +65,7 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<Cliente> find(Cliente filtro){
+    public List<Cliente> find(Cliente filtro, Authentication authentication){
         //metodo que permite buscar por todos os dados da base da table especifico bem como filtrar por qualquer coluna que contenha  na
         //base de dados, ignorando letras maiuscula/minuscula
         ExampleMatcher matcher = ExampleMatcher
@@ -73,5 +76,21 @@ public class ClienteController {
 
         Example example = Example.of(filtro, matcher); //pegar as propriedas populadas e criar o objeto
         return clientesRepository.findAll(example);
+    }
+
+    @GetMapping("/public")
+    public ResponseEntity<String> publicRoute(Authentication authentication){
+        return ResponseEntity.ok("Public Route OK. Usuário conectado: " + authentication.getName());
+    }
+
+    @GetMapping("/private")
+    public ResponseEntity<String> privateRoute(){
+        return ResponseEntity.ok("Private Route OK");
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> adminRoute(){
+        return ResponseEntity.ok("Admin Route OK");
     }
 }
